@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UtilsPackages.Common.Cache;
 
 namespace Translator
 {
@@ -9,13 +10,16 @@ namespace Translator
         private readonly List<ITranslationsReader> _readers;
         private readonly TranslationsProviderOptions _options;
 
-        // TODO: use cache here
-        private readonly Dictionary<TranslationKey, string> _translations = new();
+        private readonly ICache<TranslationKey> _cache;
 
-        public TranslationProvider(List<ITranslationsReader> readers, TranslationsProviderOptions options)
+        public TranslationProvider(
+            List<ITranslationsReader> readers,
+            TranslationsProviderOptions options,
+            ICache<TranslationKey> cache)
         {
             _readers = readers ?? new List<ITranslationsReader>();
             _options = options ?? throw new ArgumentNullException(nameof(options));
+            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
             ReadTranslationsIfStoreInMemory();
         }
 
@@ -32,10 +36,7 @@ namespace Translator
                 foreach (var translation in ReadTranslations(language))
                 {
                     var cacheKey = new TranslationKey(language, translation.Key);
-                    if (!_translations.ContainsKey(cacheKey))
-                    {
-                        _translations.Add(cacheKey, translation.Value);
-                    }
+                    _cache.SetIfNotExist(cacheKey, translation.Value);
                 }
             }
         }
@@ -87,7 +88,7 @@ namespace Translator
 
             if (_options.Cache.Type == CacheType.UseInMemoryCache)
             {
-                _translations.Add(translationKey, translation);
+                _cache.Set(translationKey, translation, _options.Cache.ExpireTime);
             }
 
             return key;
@@ -95,7 +96,7 @@ namespace Translator
 
         private bool TrySearchInCache(TranslationKey translationKey, out string translation)
         {
-            return _translations.TryGetValue(translationKey, out translation);
+            return _cache.TryGetValue(translationKey, out translation);
         }
 
         public IEnumerable<KeyValuePair<string, string>> ReadTranslations(string language)
@@ -110,7 +111,7 @@ namespace Translator
                     knownLanguage = true;
                 }
 
-                foreach (var translation in config.Translations)
+                foreach (var translation in config?.Translations ?? new Dictionary<string, string>())
                 {
                     if (!deduplicationCache.Contains(translation.Key))
                     {

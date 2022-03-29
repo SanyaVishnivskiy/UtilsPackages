@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using UtilsPackages.Common.Cache;
 using UtilsPackages.Common.Json;
 
 namespace Translator
@@ -57,12 +58,14 @@ namespace Translator
             var jsonReader = new JsonFileReader();
             var reader = new TranslationsJsonFileReader(jsonReader, _jsonTranslationFiles);
 
+            var cache = new InMemoryCache<TranslationKey>();
+
             var readers = new List<ITranslationsReader> { reader };
             var options = new TranslationsProviderOptions {
                 DefaultLanguage = _defaultLanguage,
                 Cache = _cacheOptions,
             };
-            return new TranslationProvider(readers, options);
+            return new TranslationProvider(readers, options, cache);
         }
     }
 }
