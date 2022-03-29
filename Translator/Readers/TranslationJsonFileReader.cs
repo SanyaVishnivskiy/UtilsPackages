@@ -51,16 +51,10 @@ namespace Translator
         {
             if (!_languageFileMap.ContainsKey(language))
             {
-                throw new TranslationsException($"Language {language} is not configured");
+                throw new LanguageNotConfiguredException(language);
             }
 
             return _reader.Read<TranslationsConfig>(_languageFileMap[language]);
         }
-    }
-
-    internal class TranslationsConfig
-    {
-        public string Language { get; set; }
-        public Dictionary<string, string> Translations { get; } = new ();
     }
 }

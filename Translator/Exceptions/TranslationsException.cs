@@ -12,4 +12,16 @@ namespace Translator
         {
         }
     }
+
+    public class LanguageNotConfiguredException : TranslationsException
+    {
+        public LanguageNotConfiguredException(string language) : this(language, null)
+        {
+        }
+
+        public LanguageNotConfiguredException(string language, Exception innerException)
+            : base($"Language {language} is not configured", innerException)
+        {
+        }
+    }
 }

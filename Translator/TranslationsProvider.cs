@@ -5,14 +5,14 @@ using UtilsPackages.Common.Cache;
 
 namespace Translator
 {
-    internal class TranslationProvider : ITranslationProvider
+    internal class TranslationsProvider : ITranslationProvider
     {
         private readonly List<ITranslationsReader> _readers;
         private readonly TranslationsProviderOptions _options;
 
         private readonly ICache<TranslationKey> _cache;
 
-        public TranslationProvider(
+        public TranslationsProvider(
             List<ITranslationsReader> readers,
             TranslationsProviderOptions options,
             ICache<TranslationKey> cache)
@@ -123,7 +123,7 @@ namespace Translator
 
             if (!knownLanguage)
             {
-                throw new TranslationsException($"Language {language} is not configured");
+                throw new LanguageNotConfiguredException(language);
             }
         }
 
@@ -133,7 +133,7 @@ namespace Translator
             {
                 return reader.Read(language);
             }
-            catch (TranslationsException)
+            catch (LanguageNotConfiguredException)
             {
                 return null;
             }

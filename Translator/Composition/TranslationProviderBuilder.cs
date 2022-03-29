@@ -65,7 +65,7 @@ namespace Translator
                 DefaultLanguage = _defaultLanguage,
                 Cache = _cacheOptions,
             };
-            return new TranslationProvider(readers, options, cache);
+            return new TranslationsProvider(readers, options, cache);
         }
     }
 }

@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UtilsPackages", "UtilsPacka
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Translator", "Translator\Translator.csproj", "{AD07CD71-1302-4DF4-99A0-776CB6C3424D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilsPackages.Common", "UtilsPackages.Common\UtilsPackages.Common.csproj", "{638E9381-3BE1-41FB-8AED-6D04288F3ECC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UtilsPackages.Common", "UtilsPackages.Common\UtilsPackages.Common.csproj", "{638E9381-3BE1-41FB-8AED-6D04288F3ECC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translator.Tests", "Translator.Tests\Translator.Tests.csproj", "{D8989A62-E852-4EC6-84C5-EF2DFF82FB83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{638E9381-3BE1-41FB-8AED-6D04288F3ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{638E9381-3BE1-41FB-8AED-6D04288F3ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{638E9381-3BE1-41FB-8AED-6D04288F3ECC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8989A62-E852-4EC6-84C5-EF2DFF82FB83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8989A62-E852-4EC6-84C5-EF2DFF82FB83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8989A62-E852-4EC6-84C5-EF2DFF82FB83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8989A62-E852-4EC6-84C5-EF2DFF82FB83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
